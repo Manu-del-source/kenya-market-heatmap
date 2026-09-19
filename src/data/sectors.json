@@ -1,0 +1,55 @@
+{
+  "$comment": "NSE market segments. `name` follows the Nairobi Securities Exchange official segment naming; `slug` is used in URLs (/sectors/<slug>). Order drives the UI filter order.",
+  "sectors": [
+    {
+      "slug": "banking",
+      "name": "Banking",
+      "description": "Licensed banks and banking groups listed on the Nairobi Securities Exchange."
+    },
+    {
+      "slug": "insurance",
+      "name": "Insurance",
+      "description": "Insurance, reinsurance and composite financial assurance companies."
+    },
+    {
+      "slug": "telecommunication",
+      "name": "Telecommunication",
+      "description": "Telecommunications and technology companies."
+    },
+    {
+      "slug": "energy-petroleum",
+      "name": "Energy & Petroleum",
+      "description": "Power generation, transmission, distribution and petroleum marketing."
+    },
+    {
+      "slug": "manufacturing-allied",
+      "name": "Manufacturing & Allied",
+      "description": "Beverages, tobacco, milling, industrial gases and other manufacturers."
+    },
+    {
+      "slug": "agricultural",
+      "name": "Agricultural",
+      "description": "Tea, coffee, horticulture and other agricultural producers."
+    },
+    {
+      "slug": "construction-allied",
+      "name": "Construction & Allied",
+      "description": "Cement, building products and construction-related businesses."
+    },
+    {
+      "slug": "commercial-services",
+      "name": "Commercial & Services",
+      "description": "Retail, aviation, media, logistics, hospitality and business services."
+    },
+    {
+      "slug": "investment",
+      "name": "Investment",
+      "description": "Investment holding companies and investment vehicles."
+    },
+    {
+      "slug": "automobiles-accessories",
+      "name": "Automobiles & Accessories",
+      "description": "Vehicle assembly, distribution and accessories."
+    }
+  ]
+}

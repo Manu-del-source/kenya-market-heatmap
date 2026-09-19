@@ -1,62 +1,76 @@
-import { LiveStock } from "@/hooks/useLiveStocks";
+/**
+ * Top gainers and losers.
+ *
+ * Rows link to the company page. Instruments with no usable change are left out
+ * rather than shown as 0.00%.
+ */
+
+import Link from "next/link";
+import type { Quote } from "@/lib/types/market";
+import { formatPercent, formatPrice } from "@/lib/format";
 
 type TopMoversProps = {
-  stocks: LiveStock[];
-  onSelect: (symbol: string) => void;
+  gainers: Quote[];
+  losers: Quote[];
+  nameByTicker: Record<string, string>;
 };
 
-function formatPrice(price: number) {
-  return price.toLocaleString("en-KE", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+function MoverRow({
+  quote,
+  rank,
+  name,
+}: {
+  quote: Quote;
+  rank: number;
+  name: string;
+}) {
+  const up = (quote.changePercent ?? 0) >= 0;
+  return (
+    <Link
+      className="mover-row"
+      href={`/stocks/${quote.ticker}`}
+      aria-label={`View ${quote.ticker} — ${name} details`}
+    >
+      <span className="mover-rank">{rank + 1}</span>
+
+      <span className="mover-info">
+        <strong>{quote.ticker}</strong>
+        <span>{name}</span>
+      </span>
+
+      <span className="mover-value">
+        <strong className={up ? "green" : "red"}>
+          {up ? "▲" : "▼"} {formatPercent(quote.changePercent)}
+        </strong>
+        <span>KSh {formatPrice(quote.price)}</span>
+      </span>
+    </Link>
+  );
 }
 
-export default function TopMovers({ stocks, onSelect }: TopMoversProps) {
-  const gainers = [...stocks]
-    .filter((stock) => stock.change > 0)
-    .sort((a, b) => b.change - a.change)
-    .slice(0, 5);
-
-  const losers = [...stocks]
-    .filter((stock) => stock.change < 0)
-    .sort((a, b) => a.change - b.change)
-    .slice(0, 5);
-
+export default function TopMovers({ gainers, losers, nameByTicker }: TopMoversProps) {
   return (
-    <section className="movers-section">
-      <div className="section-title">TOP MOVERS</div>
+    <section className="movers-section" aria-label="Top movers">
+      <div className="section-head">
+        <div className="section-title">TOP MOVERS</div>
+        <span className="section-note">By percentage change in the current snapshot</span>
+      </div>
 
       <div className="movers">
         <div className="movers-column">
           <div className="movers-header green">TOP GAINERS</div>
 
           {gainers.length > 0 ? (
-            gainers.map((stock, rank) => (
-              <button
-                type="button"
-                className="mover-row"
-                key={stock.symbol}
-                onClick={() => onSelect(stock.symbol)}
-                aria-label={`View ${stock.symbol} — ${stock.name} details`}
-              >
-                <span className="mover-rank">{rank + 1}</span>
-
-                <div className="mover-info">
-                  <strong>{stock.symbol}</strong>
-
-                  <span>{stock.name}</span>
-                </div>
-
-                <div className="mover-value">
-                  <strong className="green">▲ {stock.change.toFixed(2)}%</strong>
-
-                  <span>KSh {formatPrice(stock.price)}</span>
-                </div>
-              </button>
+            gainers.map((quote, rank) => (
+              <MoverRow
+                key={quote.ticker}
+                quote={quote}
+                rank={rank}
+                name={nameByTicker[quote.ticker] ?? quote.ticker}
+              />
             ))
           ) : (
-            <div className="mover-empty">No gainers right now</div>
+            <div className="mover-empty">No gainers in this snapshot</div>
           )}
         </div>
 
@@ -64,31 +78,16 @@ export default function TopMovers({ stocks, onSelect }: TopMoversProps) {
           <div className="movers-header red">TOP LOSERS</div>
 
           {losers.length > 0 ? (
-            losers.map((stock, rank) => (
-              <button
-                type="button"
-                className="mover-row"
-                key={stock.symbol}
-                onClick={() => onSelect(stock.symbol)}
-                aria-label={`View ${stock.symbol} — ${stock.name} details`}
-              >
-                <span className="mover-rank">{rank + 1}</span>
-
-                <div className="mover-info">
-                  <strong>{stock.symbol}</strong>
-
-                  <span>{stock.name}</span>
-                </div>
-
-                <div className="mover-value">
-                  <strong className="red">▼ {stock.change.toFixed(2)}%</strong>
-
-                  <span>KSh {formatPrice(stock.price)}</span>
-                </div>
-              </button>
+            losers.map((quote, rank) => (
+              <MoverRow
+                key={quote.ticker}
+                quote={quote}
+                rank={rank}
+                name={nameByTicker[quote.ticker] ?? quote.ticker}
+              />
             ))
           ) : (
-            <div className="mover-empty">No losers right now</div>
+            <div className="mover-empty">No losers in this snapshot</div>
           )}
         </div>
       </div>

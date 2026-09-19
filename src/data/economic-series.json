@@ -1,0 +1,89 @@
+{
+  "$comment": "Catalogue of Kenyan economic series the platform is designed to display. DEFINITIONS AND SOURCES ONLY — no observations are stored here. Observations are ingested separately (see docs/economy-data.md), because economic data has its own publishers, licences and release calendars and must never be scraped or estimated.",
+  "series": [
+    {
+      "seriesId": "KE.KNBS.CPI.YOY",
+      "name": "Inflation rate (CPI, year-on-year)",
+      "category": "Prices",
+      "unit": "%",
+      "frequency": "monthly",
+      "description": "Annual consumer price inflation as published by the Kenya National Bureau of Statistics.",
+      "source": "Kenya National Bureau of Statistics (KNBS)",
+      "sourceUrl": "https://www.knbs.or.ke/",
+      "license": "Published by KNBS. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    },
+    {
+      "seriesId": "KE.CBK.CBR",
+      "name": "Central Bank Rate (CBR)",
+      "category": "Interest rates",
+      "unit": "%",
+      "frequency": "event",
+      "description": "Policy rate set by the Monetary Policy Committee of the Central Bank of Kenya.",
+      "source": "Central Bank of Kenya (CBK)",
+      "sourceUrl": "https://www.centralbank.go.ke/rates/central-bank-rate/",
+      "license": "Published by CBK. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    },
+    {
+      "seriesId": "KE.CBK.TBILL.91",
+      "name": "91-day Treasury bill rate",
+      "category": "Interest rates",
+      "unit": "%",
+      "frequency": "weekly",
+      "description": "Weighted average accepted rate on the 91-day Treasury bill; benchmark short-term rate.",
+      "source": "Central Bank of Kenya (CBK)",
+      "sourceUrl": "https://www.centralbank.go.ke/rates/treasury-bills/",
+      "license": "Published by CBK. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    },
+    {
+      "seriesId": "KE.CBK.LENDING",
+      "name": "Commercial bank average lending rate",
+      "category": "Interest rates",
+      "unit": "%",
+      "frequency": "monthly",
+      "description": "Weighted average commercial bank lending rate.",
+      "source": "Central Bank of Kenya (CBK)",
+      "sourceUrl": "https://www.centralbank.go.ke/statistics/interest-rates/",
+      "license": "Published by CBK. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    },
+    {
+      "seriesId": "KE.CBK.USD.KES",
+      "name": "USD / KES exchange rate",
+      "category": "Exchange rates",
+      "unit": "KES per USD",
+      "frequency": "daily",
+      "description": "Central Bank of Kenya indicative exchange rate for the US dollar.",
+      "source": "Central Bank of Kenya (CBK)",
+      "sourceUrl": "https://www.centralbank.go.ke/rates/foreign-exchange-rates/",
+      "license": "Published by CBK. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    },
+    {
+      "seriesId": "KE.KNBS.GDP.Q",
+      "name": "Real GDP growth (year-on-year)",
+      "category": "Growth",
+      "unit": "%",
+      "frequency": "quarterly",
+      "description": "Quarterly national accounts growth published by the Kenya National Bureau of Statistics.",
+      "source": "Kenya National Bureau of Statistics (KNBS)",
+      "sourceUrl": "https://www.knbs.or.ke/",
+      "license": "Published by KNBS. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    },
+    {
+      "seriesId": "KE.KNBS.TRADE.BALANCE",
+      "name": "Trade balance",
+      "category": "Trade",
+      "unit": "KES millions",
+      "frequency": "monthly",
+      "description": "Value of exports minus imports of goods.",
+      "source": "Kenya National Bureau of Statistics (KNBS)",
+      "sourceUrl": "https://www.knbs.or.ke/",
+      "license": "Published by KNBS. Confirm redistribution terms before commercial use.",
+      "ingestion": "csv"
+    }
+  ]
+}

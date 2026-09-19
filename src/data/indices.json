@@ -1,0 +1,35 @@
+{
+  "$comment": "NSE index reference data. Index definitions are real; `baselineValue` is a demo anchor only (see data/demo-baseline.json) and carries no market meaning.",
+  "indices": [
+    {
+      "symbol": "NASI",
+      "name": "NSE All Share Index",
+      "description": "All-share index covering every equity listed on the Main Investment Market segment.",
+      "baselineValue": 237.59
+    },
+    {
+      "symbol": "NSE20",
+      "name": "NSE 20 Share Index",
+      "description": "Weighted index of 20 large-cap counters; the oldest NSE benchmark.",
+      "baselineValue": 4197.46
+    },
+    {
+      "symbol": "NSE25",
+      "name": "NSE 25 Share Index",
+      "description": "Market-capitalisation weighted index of 25 liquid counters.",
+      "baselineValue": 6670.88
+    },
+    {
+      "symbol": "NSE10",
+      "name": "NSE 10 Share Index",
+      "description": "Index tracking the ten most liquid counters by turnover.",
+      "baselineValue": 2588.24
+    },
+    {
+      "symbol": "BSI",
+      "name": "Banking Share Index",
+      "description": "Sector index tracking listed banking counters.",
+      "baselineValue": 273.95
+    }
+  ]
+}

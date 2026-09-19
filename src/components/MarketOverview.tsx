@@ -1,51 +1,63 @@
-import { LiveStock } from "@/hooks/useLiveStocks";
+/**
+ * Top-of-page market stat strip.
+ *
+ * Every value is derived from the current snapshot. Aggregates the source does
+ * not provide stay null and render as an em dash — they are never estimated.
+ */
 
-type MarketOverviewProps = {
-  stocks: LiveStock[];
-};
+import type { MarketSummary } from "@/lib/types/market";
+import { changeClass, formatCompactKes, formatCompactNumber, formatPercent } from "@/lib/format";
+import DataBadge from "./DataBadge";
 
-function formatCompact(value: number) {
-  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(2)}B`;
-  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(2)}M`;
-  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
-  return value.toLocaleString("en-KE");
-}
-
-export default function MarketOverview({ stocks }: MarketOverviewProps) {
-  // Counts are derived from the dataset — never hardcoded.
-  const advancing = stocks.filter((stock) => stock.change > 0).length;
-  const declining = stocks.filter((stock) => stock.change < 0).length;
-  const unchanged = stocks.filter((stock) => stock.change === 0).length;
-  const totalListed = stocks.length;
-
-  // Market-wide aggregates have no per-stock source in the prototype dataset,
-  // so they are derived estimates and clearly labelled MOCK in the UI.
-  const totalVolume = stocks.reduce((sum, stock) => sum + stock.volume, 0);
-  const turnover = stocks.reduce(
-    (sum, stock) => sum + stock.volume * stock.price,
-    0
-  );
-
+export default function MarketOverview({
+  summary,
+  mode,
+}: {
+  summary: MarketSummary;
+  mode: "live" | "delayed" | "end-of-day" | "demo" | "unavailable";
+}) {
   const cards = [
-    { label: "ADVANCING", value: String(advancing), className: "green" },
-    { label: "DECLINING", value: String(declining), className: "red" },
-    { label: "UNCHANGED", value: String(unchanged), className: "" },
-    { label: "LISTED", value: String(totalListed), className: "" },
-    { label: "TURNOVER", value: `KSh ${formatCompact(turnover)}`, className: "", mock: true },
-    { label: "VOLUME", value: formatCompact(totalVolume), className: "", mock: true },
+    {
+      label: "MARKET RETURN",
+      value: formatPercent(summary.marketReturn),
+      className: changeClass(summary.marketReturn),
+    },
+    {
+      label: "ADVANCING",
+      value: String(summary.advancing),
+      className: "green",
+    },
+    {
+      label: "DECLINING",
+      value: String(summary.declining),
+      className: "red",
+    },
+    {
+      label: "UNCHANGED",
+      value: String(summary.unchanged),
+      className: "",
+    },
+    {
+      label: "TURNOVER",
+      value: formatCompactKes(summary.totalTurnover),
+      className: "",
+    },
+    {
+      label: "VOLUME",
+      value: formatCompactNumber(summary.totalVolume),
+      className: "",
+    },
   ];
 
   return (
     <div className="market-overview" aria-label="Market overview">
       {cards.map((card) => (
         <div className="overview-card" key={card.label}>
-          <span>{card.label}</span>
+          <span>
+            {card.label}
+            {mode === "demo" && <DataBadge mode="demo" label="DEMO" />}
+          </span>
           <strong className={card.className}>{card.value}</strong>
-          {card.mock && (
-            <em className="mock-tag" title="Prototype estimate, not live">
-              MOCK
-            </em>
-          )}
         </div>
       ))}
     </div>
